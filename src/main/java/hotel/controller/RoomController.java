@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value="/rooms")
@@ -34,16 +35,16 @@ public class RoomController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(),null));
         }
     }
-    @GetMapping()
-    public ResponseEntity<ApiResponse> getRoom(){
-//        Room savedRoom;
+
+    @GetMapping(value="/room-types")
+    public ResponseEntity<ApiResponse> addNewRoom(){
         try {
-//            savedRoom = roomService.addNewRoom(file,roomType,roomPrice);
-//            RoomResponse response= Mapper.RoomToRoomResponse(savedRoom);
-            return ResponseEntity.ok(new ApiResponse("Success","response"));
+            List<String> roomTypes= roomService.getRoomTypes();
+            return ResponseEntity.ok(new ApiResponse("Success",roomTypes));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(),null));
         }
     }
+
 }
